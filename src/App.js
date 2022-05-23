@@ -24,36 +24,29 @@ function App() {
   const [items, setItems] = useState([]);
   // splice(start, deleteCnt, insertVal) start부터 deleteCnt개 제거, insertVal몇개 넣어라
 
-  const reorder = (list, startIndex, endIndex) => {
-    const [removed] = list.splice(startIndex, 1); // startIndex 한개 removed로
-    list.splice(endIndex, 0, removed); // 마지막에 removed추가
+  const reorder = (current, startIndex, endIndex) => {
+    const result = Array.from(current);
+    const [removed] = result.splice(startIndex, 1); // startIndex 한개 removed로
+    result.splice(endIndex, 0, removed); // 마지막에 removed추가
 
-    return list;
+    return result;
   };
 
-  const copy = (source, droppableSource, droppableDestination) => {
+  const copy = (source, current, droppableSource, droppableDestination) => {
     // console.log(droppableDestination, "==> dest", destination);
     const item = source[droppableSource.index];
     const idx = droppableDestination.index;
+    const arr = Array.from(current);
 
-    items.splice(idx, 0, { ...item, id: uuid() });
-    setItems([...items]);
+    arr.splice(idx, 0, { ...item, id: uuid() });
+    setItems(arr);
   };
 
-  const move = (source, destination, droppableSource, droppableDestination) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
+  const removeItem = (current, dropSource) => {
+    const arr = Array.from(current);
 
-    destClone.splice(droppableDestination.index, 0, removed);
-
-    const result = {};
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
-    // console.log("기존 idx: ", droppableDestination.droppableId);
-    // console.log("바꾼 idx: ", droppableDestination.idx);
-    // console.log("result출력: ", result);
-    return result;
+    arr.splice(dropSource.index, 1);
+    setItems(arr);
   };
 
   const onDragEnd = (result) => {
@@ -85,20 +78,18 @@ function App() {
     console.log(source);
     if (start === "area" && start === finish) {
       console.log("==");
-      const arr = reorder(items, source.index, destination.index);
-      setItems([...arr]);
+      setItems(reorder(items, source.index, destination.index));
     }
     if (start === "Items" && finish === "area") {
-      copy(Items, source, destination);
+      copy(Items, items, source, destination);
+    }
+    if (start === "area" && finish === "remove") {
+      removeItem(items, source);
     }
   };
 
   console.log(items);
-  const removeItem = (result) => {
-    const { source, destination } = result;
 
-    if (!destination) return;
-  };
   return (
     <DragDropContext
       // onDragStart={onDragStart}
@@ -111,7 +102,7 @@ function App() {
       <Container>
         <Column items={items} droppableId="area" />
       </Container>
-      <Remove droppableId="remove" />
+      <Remove items={items} droppableId="remove" />
     </DragDropContext>
   );
 }

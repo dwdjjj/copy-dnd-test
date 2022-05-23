@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import { Title } from "./styles";
+import DeleteIcon from "@material-ui/icons/Delete";
 const RemoveArea = styled.div`
   padding: 8px;
   transition: background-color 0.5s ease;
@@ -15,7 +16,7 @@ const RemoveArea = styled.div`
 const RemoveBox = styled.div`
   text-align: center;
 `;
-export default function Remove({ key, item, droppableId }) {
+export default function Remove({ key, items, droppableId }) {
   return (
     <>
       <Title>{droppableId}</Title>
@@ -30,6 +31,7 @@ export default function Remove({ key, item, droppableId }) {
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
+              <DeleteIcon fontSize="large" color="primary" />
               {provided.placeholder}
             </RemoveArea>
           )}
