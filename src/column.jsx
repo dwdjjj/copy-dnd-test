@@ -1,12 +1,12 @@
 import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import Task from "./task";
-import { Title, ColContainer, TaskList } from "../src/styles";
+import { Title, ColContainer, TaskList, Item } from "../src/styles";
 
 export default function Column({ key, items, isDropDisabled, droppableId }) {
   return (
     <ColContainer>
-      <Title>{droppableId}</Title>
+      <Title>{`k8s ` + droppableId}</Title>
       <Droppable
         droppableId={droppableId}
         // isDropDisabled={isDropDisabled}
@@ -17,9 +17,11 @@ export default function Column({ key, items, isDropDisabled, droppableId }) {
             isDraggingOver={snapshot.isDraggingOver}
             {...provided.droppableProps}
           >
-            {items.map((item, index) => (
-              <Task key={item.id} item={item} index={index} />
-            ))}
+            <Item area={droppableId}>
+              {items.map((item, index) => (
+                <Task key={item.id} item={item} index={index} />
+              ))}
+            </Item>
             {provided.placeholder}
           </TaskList>
         )}

@@ -19,10 +19,10 @@ export const List = styled.div`
     background-color: gray;
   }
   @media (min-width: 500px) {
+    position: absolute;
     width: 250px;
-  }
-  @media (min-width: 1000px) {
-    width: 50%;
+    max-height: 500px;
+    background-color: lightslategray;
   }
 `;
 
@@ -39,10 +39,10 @@ export const Container = styled.div`
     background-color: lightblue;
   }
   @media (min-width: 500px) {
+    position: absolute;
     width: 250px;
-  }
-  @media (min-width: 1000px) {
-    width: 50%;
+    max-height: 500px;
+    background-color: lightskyblue;
   }
 `;
 
@@ -56,16 +56,10 @@ export const ColContainer = styled.div`
 `;
 
 export const Item = styled.div`
-  display: flex;
-  user-select: none;
-  padding: 0.5rem;
-  margin: 0 0 0.5rem 0;
-  align-items: flex-start;
-  align-content: flex-start;
-  line-height: 1.5;
-  border-radius: 3px;
-  background: #fff;
-  border: 1px ${(props) => (props.isDragging ? "dashed #4099ff" : "solid #ddd")};
+  /* display: flex; */
+  /* :hover {
+    background-color: ${(props) => (props.area === "area" ? "blue" : "green")};
+  } */
 `;
 
 export const TaskList = styled.div`
@@ -74,4 +68,54 @@ export const TaskList = styled.div`
   background-color: ${(props) => (props.isDraggingOver ? "orange" : "white")};
   flex-grow: 1;
   min-height: 100px;
+`;
+
+export const TaskContainer = styled.div`
+  /* position: relative; */
+  border: 2px solid lightgrey;
+  border-radius: 3px;
+  padding: 8px;
+  margin-bottom: 8px;
+  flex-direction: column;
+  background-color: ${(props) =>
+    props.isDragDisabled
+      ? "lightgrey"
+      : props.isDragging
+      ? "lightgreen"
+      : "white"};
+  display: flex;
+`;
+
+export const RemoveBox = styled.div`
+  text-align: center;
+
+  border: 2px solid lightgrey;
+  border-radius: 3px;
+  padding: 8px;
+`;
+
+export const RemoveArea = styled.div`
+  transition: background-color 0.5s ease;
+  background-color: ${(props) =>
+    props.isDraggingOver ? "black" : "lightgray"};
+  flex-grow: 1;
+  min-height: 100px;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 60px;
+`;
+
+export const IconBox = styled.div`
+  margin-top: 30px;
+  margin-bottom: 30px;
+`;
+
+export const RemoveDiv = styled.div`
+  position: relative;
+  top: 500px;
+  @media (max-width: 500px) {
+    position: absolute;
+    display: inline-flex;
+  }
 `;

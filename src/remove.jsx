@@ -1,25 +1,13 @@
 import React from "react";
-import styled from "styled-components";
 import { Droppable } from "react-beautiful-dnd";
 import { Title } from "./styles";
 import DeleteIcon from "@material-ui/icons/Delete";
-const RemoveArea = styled.div`
-  padding: 8px;
-  transition: background-color 0.5s ease;
-  background-color: ${(props) => (props.isDraggingOver ? "red" : "lightgray")};
-  flex-grow: 1;
-  min-height: 100px;
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-`;
-const RemoveBox = styled.div`
-  text-align: center;
-`;
-export default function Remove({ key, items, droppableId }) {
+import { RemoveBox, RemoveArea, IconBox, RemoveDiv } from "./styles";
+
+export default function Remove({ key, items, droppableId, target }) {
   return (
-    <>
-      <Title>{droppableId}</Title>
+    <RemoveDiv>
+      <Title>{droppableId + ` item`}</Title>
       <RemoveBox>
         <Droppable
           droppableId={droppableId}
@@ -31,12 +19,14 @@ export default function Remove({ key, items, droppableId }) {
               isDraggingOver={snapshot.isDraggingOver}
               {...provided.droppableProps}
             >
-              <DeleteIcon fontSize="large" color="primary" />
+              <IconBox>
+                <DeleteIcon fontSize="large" color="secondary" />
+              </IconBox>
               {provided.placeholder}
             </RemoveArea>
           )}
         </Droppable>
       </RemoveBox>
-    </>
+    </RemoveDiv>
   );
 }

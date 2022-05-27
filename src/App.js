@@ -88,8 +88,6 @@ function App() {
     }
   };
 
-  console.log(items);
-
   return (
     <DragDropContext
       // onDragStart={onDragStart}
